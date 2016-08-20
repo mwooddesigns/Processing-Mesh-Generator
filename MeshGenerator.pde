@@ -12,7 +12,7 @@ void draw() {
     beginRecord("nervoussystem.obj.OBJExport", "test.obj"); 
   }
   background(0);
-  generateMesh();
+  generateMesh(100);
   if(record) {
     endRecord();
     record = false;
@@ -25,12 +25,17 @@ void keyPressed() {
   }
 }
 
-void generateMesh() {
+void generateMesh(int mod) {
+  if(mod == 1) {
+    return;
+  }
   pushMatrix();
-  translate(width/2, height/2, 0);
+  translate(width/2, height/2);
+  translate(sin(mod)*(width/2 - 50), cos(mod)*(height/2 - 50), mod);
   rotateY(1.2);
   rotateX(0.5);
   noStroke();
-  box(100);
+  box(20);
   popMatrix();
+  generateMesh(mod - 1);
 }
