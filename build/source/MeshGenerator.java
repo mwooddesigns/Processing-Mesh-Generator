@@ -27,13 +27,14 @@ public void setup() {
 
 public void draw() {
   if(record) {
-    beginRecord("nervoussystem.obj.OBJExport", "test.obj");
+    beginRecord("nervoussystem.obj.OBJExport", "spiralTest.obj");
   }
   background(0);
   pushMatrix();
-  translate(width/2, height/2);
-  // generateCylinder(1000, 0, 50
-  generateTree(radians(20), 90, 30);
+  translate(width/2, height/2, random(30));
+  // generateCylinder(1000, 0, 50);
+  // generateTree(radians(20), 90, 30, 30);
+  generateSpiral(0, 300, 20);
   popMatrix();
   if(record) {
     endRecord();
@@ -61,19 +62,31 @@ public void generateCylinder(float mod, float deg, float noise) {
   generateCylinder(mod - 1, deg + 1, noise);
 }
 
-public void generateTree(float theta, float size, float spacing) {
+public void generateTree(float theta, float size, float spacing, float variation) {
   size *= .65f;
   if(size > 2) {
     pushMatrix();
     rotateZ(theta);
     box(size);
-    translate(0, spacing, random(30));
-    generateTree(theta, size, spacing);
+    translate(0, spacing, random(variation));
+    generateTree(theta, size, spacing, variation);
     rotateZ(-theta);
     box(size);
-    translate(0, spacing, random(30));
-    generateTree(theta, size, spacing);
+    translate(0, spacing, random(variation));
+    generateTree(theta, size, spacing, variation);
     popMatrix();
+  }
+}
+
+public void generateSpiral(float start, float end, float nodeSize) {
+  start++;
+  nodeSize *= 0.99f;
+  if(start < end) {
+    pushMatrix();
+    translate(cos(start) * start, sin(start) * start);
+    sphere(nodeSize);
+    popMatrix();
+    generateSpiral(start, end, nodeSize);
   }
 }
   public void settings() {  size(600, 400, P3D); }
