@@ -23,23 +23,25 @@ boolean record = false;
 public void setup() {
   
   noStroke();
+  colorMode(HSB, 100);
 }
 
 public void draw() {
-  if(record) {
-    beginRecord("nervoussystem.obj.OBJExport", "spiralTest.obj");
-  }
   background(0);
   pushMatrix();
   translate(width/2, height/2, random(30));
-  // generateCylinder(1000, 0, 50);
-  // generateTree(radians(20), 90, 30, 30);
-  generateSpiral(0, 300, 20);
-  popMatrix();
   if(record) {
-    endRecord();
+    OBJExport obj = (OBJExport) createGraphics(10,10,"nervoussystem.obj.OBJExport","generated.obj");
+    obj.setColor(true);
+    obj.beginDraw();
+    generateCylinder(1000, 0, 50);
+    // generateTree(radians(20), 90, 30, 30);
+    // generateSpiral(0, 300, 20);
+    obj.endDraw();
+    obj.dispose();
     record = false;
   }
+  popMatrix();
 }
 
 public void keyPressed() {
@@ -52,6 +54,7 @@ public void generateCylinder(float mod, float deg, float noise) {
   if(mod == 1) {
     return;
   }
+  fill(mod, 100, 100);
   pushMatrix();
   translate(sin(mod)*(width/2 - random(noise)), cos(mod)*(height/2 - random(noise)), mod);
   rotateY(radians(deg));

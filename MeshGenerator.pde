@@ -5,18 +5,19 @@ boolean record = false;
 void setup() {
   size(600, 400, P3D);
   noStroke();
+  colorMode(HSB, 100);
 }
 
 void draw() {
   if(record) {
-    beginRecord("nervoussystem.obj.OBJExport", "spiralTest.obj");
+    beginRecord("nervoussystem.obj.OBJExport", "generated.obj");
   }
   background(0);
   pushMatrix();
   translate(width/2, height/2, random(30));
-  // generateCylinder(1000, 0, 50);
+  generateCylinder(1000, 0, 50);
   // generateTree(radians(20), 90, 30, 30);
-  generateSpiral(0, 300, 20);
+  // generateSpiral(0, 300, 20);
   popMatrix();
   if(record) {
     endRecord();
@@ -34,6 +35,7 @@ void generateCylinder(float mod, float deg, float noise) {
   if(mod == 1) {
     return;
   }
+  fill(mod, 100, 100);
   pushMatrix();
   translate(sin(mod)*(width/2 - random(noise)), cos(mod)*(height/2 - random(noise)), mod);
   rotateY(radians(deg));
